@@ -15,7 +15,7 @@ app.use(express.static("public"));
 
 app.use("/api/leads", leadsRoute);
 
-
+app.set("trust proxy", 1);
 app.use(session({
     store: new SQLiteStore(),
     secret: "supersecretkey",
@@ -35,7 +35,9 @@ app.get("/admin/dashboard.html", auth, (req, res) => {
 app.use("/api/admin", adminAuth);
 app.use("/api/admin/leads", adminLeads);
 
-const PORT = 3000;
+
+const PORT = process.env.PORT || 3000;
+
 app.listen(PORT, () =>
-    console.log(`Server running http://localhost:${PORT}`)
+    console.log(`Server running on port ${PORT}`)
 );
